@@ -109,7 +109,7 @@ private fun LevelBubble(level: Int, unlocked: Boolean, onClick: () -> Unit) {
         if (unlocked) {
             Text(
                 text = level.toString(),
-                color = TextOnGold,
+                color = White,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 28.sp
             )

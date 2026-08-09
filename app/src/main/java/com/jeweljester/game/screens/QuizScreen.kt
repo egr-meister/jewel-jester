@@ -1,6 +1,7 @@
 package com.jeweljester.game.screens
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.jeweljester.game.data.Assets
 import com.jeweljester.game.navigation.Routes
 import com.jeweljester.game.navigation.rememberRepository
 import com.jeweljester.game.ui.components.JewelBackground
@@ -132,6 +136,18 @@ fun QuizScreen(nav: NavHostController, categoryId: String) {
                 }
             }
         }
+
+        // Большой джокер-девочка в пустой области под ответами.
+        Image(
+            painter = painterResource(id = Assets.jesterB),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(0.62f)
+                .height(320.dp)
+                .padding(bottom = 8.dp)
+        )
 
         if (state.paused) {
             PausePanel(

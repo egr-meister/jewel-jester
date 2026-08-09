@@ -55,7 +55,7 @@ fun MenuScreen(nav: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(18.dp, Alignment.CenterVertically)
             ) {
                 JewelButton(text = "Quiz") { nav.navigate(Routes.QUIZ_MENU) }
-                JewelButton(text = "Puzzles") { nav.navigate(Routes.LEVELS) }
+                JewelButton(text = "Matching Pairs") { nav.navigate(Routes.LEVELS) }
                 JewelButton(text = "Results") { nav.navigate(Routes.RESULTS) }
                 JewelButton(text = "Settings") { nav.navigate(Routes.SETTINGS) }
             }

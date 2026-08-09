@@ -2,10 +2,12 @@ package com.jeweljester.game.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,7 +34,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jeweljester.game.data.Assets
-import com.jeweljester.game.ui.theme.TextOnGold
+import com.jeweljester.game.ui.theme.Gold
+import com.jeweljester.game.ui.theme.JewelDeep
+import com.jeweljester.game.ui.theme.JewelLight
 import com.jeweljester.game.ui.theme.White
 
 /** Полноэкранный фон + контент. */
@@ -72,7 +77,7 @@ fun JewelButton(
         )
         Text(
             text = text.uppercase(),
-            color = TextOnGold,
+            color = White,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 18.sp,
             textAlign = TextAlign.Center,
@@ -83,28 +88,27 @@ fun JewelButton(
     }
 }
 
-/** Панель (пауза/результаты/правила) на ассете panel_bg. */
+/**
+ * Панель (пауза/результаты/правила). Рисуется в Compose (скруглённый
+ * прямоугольник с золотой рамкой), поэтому корректно масштабируется под любой
+ * контент и экран — без растяжения декоративной рамки-картинки.
+ */
 @Composable
 fun JewelPanel(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Box(modifier = modifier.fillMaxWidth()) {
-        Image(
-            painter = painterResource(id = Assets.panelBg),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize()
-        )
-        androidx.compose.foundation.layout.Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 28.dp, vertical = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-            content = content
-        )
-    }
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(24.dp))
+            .background(Brush.verticalGradient(listOf(JewelLight, JewelDeep)))
+            .border(3.dp, Gold, RoundedCornerShape(24.dp))
+            .padding(horizontal = 22.dp, vertical = 26.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(14.dp),
+        content = content
+    )
 }
 
 /** Верхняя панель: назад + заголовок + опциональная пауза (иконки-ассеты). */
