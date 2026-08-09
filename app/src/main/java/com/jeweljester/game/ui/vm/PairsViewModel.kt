@@ -3,6 +3,7 @@ package com.jeweljester.game.ui.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jeweljester.game.audio.SoundManager
 import com.jeweljester.game.data.Assets
 import com.jeweljester.game.data.GameLogic
 import com.jeweljester.game.data.GameRepository
@@ -104,6 +105,7 @@ class PairsViewModel(
         val match = _ui.value.cards[a].jewelRes == _ui.value.cards[b].jewelRes
         if (match) {
             delay(300)
+            SoundManager.match()
             _ui.update {
                 it.copy(
                     cards = it.cards.mapIndexed { i, c ->
@@ -130,6 +132,7 @@ class PairsViewModel(
     private fun finish(outcome: Outcome) {
         if (_ui.value.outcome != Outcome.PLAYING) return
         timerJob?.cancel()
+        if (outcome == Outcome.WON) SoundManager.win() else SoundManager.lose()
         _ui.update { it.copy(outcome = outcome) }
         viewModelScope.launch { repo.savePairsResult(level, _ui.value.matchedPairs) }
     }

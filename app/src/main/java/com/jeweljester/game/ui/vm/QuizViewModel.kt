@@ -3,6 +3,7 @@ package com.jeweljester.game.ui.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jeweljester.game.audio.SoundManager
 import com.jeweljester.game.data.GameRepository
 import com.jeweljester.game.data.Question
 import com.jeweljester.game.data.QuizData
@@ -55,6 +56,7 @@ class QuizViewModel(
 
         val correct = optionIndex == state.question.correctIndex
         val newScore = if (correct) state.score + 1 else state.score
+        if (correct) SoundManager.correct() else SoundManager.wrong()
         _ui.update { it.copy(selected = optionIndex, score = newScore) }
 
         advanceJob?.cancel()

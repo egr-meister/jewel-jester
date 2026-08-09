@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,6 @@ import com.jeweljester.game.ui.components.JewelBackground
 import com.jeweljester.game.ui.components.JewelButton
 import com.jeweljester.game.ui.components.JewelTopBar
 import com.jeweljester.game.ui.theme.JewelDeep
-import com.jeweljester.game.ui.theme.TextOnGold
 import com.jeweljester.game.ui.theme.White
 import com.jeweljester.game.ui.vm.ProgressViewModel
 
@@ -48,14 +48,19 @@ fun LevelsScreen(nav: NavHostController) {
     val data by vm.gameData.collectAsStateWithLifecycle()
 
     JewelBackground {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             JewelTopBar(title = "Levels", onBack = { nav.popBackStack() })
+
+            // Цифры уровней — сразу под заголовком (выше по экрану).
+            Spacer(Modifier.height(12.dp))
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(horizontal = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 (0 until 3).forEach { row ->
                     Row(
@@ -71,23 +76,24 @@ fun LevelsScreen(nav: NavHostController) {
                             )
                         }
                     }
-                    Spacer(Modifier.height(20.dp))
-                }
-                Spacer(Modifier.height(20.dp))
-                Box(modifier = Modifier.padding(horizontal = 40.dp)) {
-                    JewelButton("Game Rules") { nav.navigate(Routes.RULES) }
                 }
             }
+
+            // Большой джокер-мальчик под цифрами (занимает свободное место).
+            Image(
+                painter = painterResource(id = Assets.jesterA),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(0.72f)
+                    .padding(vertical = 8.dp)
+            )
+
+            Box(modifier = Modifier.padding(horizontal = 40.dp, vertical = 12.dp)) {
+                JewelButton("Game Rules") { nav.navigate(Routes.RULES) }
+            }
         }
-        // Джокер в нижнем углу для настроения.
-        Image(
-            painter = painterResource(id = Assets.jesterB),
-            contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .height(170.dp)
-                .padding(end = 2.dp)
-        )
     }
 }
 

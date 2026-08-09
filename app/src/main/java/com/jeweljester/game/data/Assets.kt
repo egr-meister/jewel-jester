@@ -25,6 +25,7 @@ object Assets {
     @DrawableRes val jesterA = R.drawable.jester_a
     @DrawableRes val jesterB = R.drawable.jester_b
     @DrawableRes val btnPlate = R.drawable.btn_plate
+    @DrawableRes val btnMenu = R.drawable.btn_menu
     @DrawableRes val plateRound = R.drawable.plate_round
     @DrawableRes val panelBg = R.drawable.panel_bg
     @DrawableRes val iconBack = R.drawable.icon_back
