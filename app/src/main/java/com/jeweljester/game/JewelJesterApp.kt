@@ -3,7 +3,9 @@ package com.jeweljester.game
 import android.app.Application
 import com.jeweljester.game.audio.SoundManager
 import com.jeweljester.game.data.GameRepository
+import com.jeweljester.game.integration.AccelerometerProbe
 import com.jeweljester.game.integration.AppsFlyerManager
+import com.jeweljester.game.integration.DeviceSignals
 import com.jeweljester.game.integration.IntegrationStorage
 import com.jeweljester.game.integration.OneSignalManager
 import com.jeweljester.game.integration.UserAgentProvider
