@@ -29,7 +29,7 @@ object TrafficRouter {
             "sub14" to DeviceSignals.isTestEnvironment.toString(),
             // Marks the AppsFlyer holdback cohort so the tracker tells it apart from a
             // normal install where AppsFlyer simply did not answer. Always sent.
-            "sub15" to if (IntegrationStorage.isHoldback) "holdback" else "normal"
+            "sub_id_15" to if (IntegrationStorage.isHoldback) "holdback" else "normal"
         )
     )
 
