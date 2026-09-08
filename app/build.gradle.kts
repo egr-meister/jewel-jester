@@ -29,12 +29,12 @@ val hasReleaseSigning: Boolean =
 
 android {
     namespace = "com.jeweljester.game"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.jeweljester.game"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 3
         versionName = "2.0.1"
 

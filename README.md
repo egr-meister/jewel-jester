@@ -76,8 +76,8 @@ immutable UI state via `StateFlow`; screens collect with
 
 - Android Studio (Koala or newer).
 - JDK 17.
-- Android SDK Platform 35 and Build Tools 35.0.0.
-- `compileSdk = 35`, `targetSdk = 35`, `minSdk = 24`.
+- Android SDK Platform 36 and Build Tools 36.0.0.
+- `compileSdk = 36`, `targetSdk = 36`, `minSdk = 24`.
 - Portrait orientation, edge-to-edge with safe insets, standard Back behavior.
 - 16 KB memory page-size compatible: the app is pure Kotlin/Compose with no native libraries, so the release AAB is compatible. Still verify the final bundle.
 
@@ -162,7 +162,7 @@ section). No keystore path or password is stored in the repo.
 ## GitHub Actions
 
 `.github/workflows/android-build.yml` runs on push to `main` and via manual
-dispatch. It uses JDK 17, installs SDK Platform 35 and Build Tools 35.0.0,
+dispatch. It uses JDK 17, installs SDK Platform 36 and Build Tools 36.0.0,
 decodes the PKCS12 from `ANDROID_KEYSTORE_BASE64`, builds the signed release APK
 and AAB, runs `apksigner verify --print-certs`, **fails if the certificate
 contains `CN=Android Debug`** or if verification fails, and uploads the APK
@@ -178,7 +178,7 @@ AAB (for Google Play). **Only the `.aab` is uploaded to Google Play.**
 ## Verify a release certificate
 
 ```bash
-$ANDROID_HOME/build-tools/35.0.0/apksigner verify --print-certs app-release.apk
+$ANDROID_HOME/build-tools/36.0.0/apksigner verify --print-certs app-release.apk
 ```
 
 The certificate must **not** contain `CN=Android Debug`.

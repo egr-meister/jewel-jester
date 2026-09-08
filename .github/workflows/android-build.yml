@@ -21,9 +21,9 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install SDK Platform 35 and Build Tools 35.0.0
+      - name: Install SDK Platform 36 and Build Tools 36.0.0
         run: |
-          yes | sdkmanager "platforms;android-35" "build-tools;35.0.0" >/dev/null
+          yes | sdkmanager "platforms;android-36" "build-tools;36.0.0" >/dev/null
 
       # Provisions Gradle 8.9 and puts `gradle` on PATH, so the repo does not
       # need a committed Gradle wrapper for CI to build.
@@ -60,7 +60,7 @@ jobs:
 
       - name: Verify APK signature and certificate
         run: |
-          BUILD_TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/36.0.0"
           "$BUILD_TOOLS/apksigner" verify --print-certs "${{ steps.apk.outputs.path }}" | tee certs.txt
           if grep -q "CN=Android Debug" certs.txt; then
             echo "::error::Release artifact is signed with a DEBUG certificate."
