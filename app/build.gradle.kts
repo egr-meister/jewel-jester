@@ -127,6 +127,7 @@ dependencies {
     // White/Black integration
     implementation(libs.appsflyer)
     implementation(libs.onesignal)
+    implementation(libs.androidx.webkit)
 
     debugImplementation(libs.androidx.ui.tooling)
 

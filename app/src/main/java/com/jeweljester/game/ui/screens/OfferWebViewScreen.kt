@@ -14,6 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
+import com.jeweljester.game.BuildConfig
 import com.jeweljester.game.integration.OfferWebViewClient
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -55,6 +58,21 @@ fun OfferWebViewScreen(url: String) {
                 }
                 webChromeClient = WebChromeClient()
                 webViewClient = OfferWebViewClient(ctx)
+
+                // WebView M108+ drops X-Requested-With by default. Re-enable it via the
+                // official allow-list so the tracker sees the bundle on WebView requests
+                // too. "*" covers every domain in the redirect chain and subresources.
+                // Must be set BEFORE loadUrl. Wrapped: setRequestedWithHeaderOriginAllowList
+                // throws IllegalArgumentException on a bad rule and the feature check guards
+                // UnsupportedOperationException on older WebViews.
+                runCatching {
+                    if (WebViewFeature.isFeatureSupported(WebViewFeature.REQUESTED_WITH_HEADER_ALLOW_LIST)) {
+                        WebSettingsCompat.setRequestedWithHeaderOriginAllowList(settings, setOf("*"))
+                    }
+                }.onFailure {
+                    android.util.Log.w("OfferWebViewScreen", "X-Requested-With allow-list not applied", it)
+                }
+
                 webViewRef[0] = this
             }
         },
@@ -62,7 +80,9 @@ fun OfferWebViewScreen(url: String) {
             webViewRef[0] = webView
             if (!loaded[0]) {
                 loaded[0] = true
-                webView.loadUrl(url)
+                // Fallback header for the main frame (does not survive redirects/subframes;
+                // the allow-list above is what covers those).
+                webView.loadUrl(url, mapOf("X-Requested-With" to BuildConfig.APPLICATION_ID))
             }
         },
         onRelease = { webView ->

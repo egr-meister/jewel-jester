@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.webkit.WebSettings
+import com.jeweljester.game.BuildConfig
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.SecureRandom
@@ -38,6 +39,10 @@ class HttpOfferProbe(
                 "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
             )
             connection.setRequestProperty("Accept-Language", "en-US,en;q=0.9")
+            // THIS is the request the tracker (Keitaro) registers as the click - the probe
+            // follows the whole redirect chain itself, so the bundle must ride on it or the
+            // install shows up as web traffic. Set on every hop of the chain.
+            connection.setRequestProperty("X-Requested-With", BuildConfig.APPLICATION_ID)
             if (connection is HttpsURLConnection) {
                 relaxTls(connection)
             }
