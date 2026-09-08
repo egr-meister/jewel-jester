@@ -26,7 +26,10 @@ object TrafficRouter {
         extra = linkedMapOf(
             "sub12" to DeviceSignals.battery,
             "sub13" to AccelerometerProbe.await(),
-            "sub14" to DeviceSignals.isTestEnvironment.toString()
+            "sub14" to DeviceSignals.isTestEnvironment.toString(),
+            // Marks the AppsFlyer holdback cohort so the tracker tells it apart from a
+            // normal install where AppsFlyer simply did not answer. Always sent.
+            "sub15" to if (IntegrationStorage.isHoldback) "holdback" else "normal"
         )
     )
 

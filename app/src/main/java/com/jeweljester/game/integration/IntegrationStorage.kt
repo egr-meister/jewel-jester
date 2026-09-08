@@ -3,6 +3,7 @@ package com.jeweljester.game.integration
 import android.content.Context
 import android.content.SharedPreferences
 import org.json.JSONObject
+import kotlin.random.Random
 
 /**
  * Singleton over its OWN SharedPreferences file, so it can never collide with keys the
@@ -16,6 +17,10 @@ object IntegrationStorage {
     private const val KEY_APPSFLYER_ID = "appsflyer_id"
     private const val KEY_CACHED_OFFER_URL = "cached_offer_url"
     private const val KEY_WHITE_LOCKED = "white_locked"
+    private const val KEY_HOLDBACK = "holdback"
+
+    /** 1 in N installs are held back from AppsFlyer init. */
+    private const val HOLDBACK_EVERY_N = 5
 
     private lateinit var prefs: SharedPreferences
 
@@ -98,6 +103,25 @@ object IntegrationStorage {
 
     /** A branch has already been pinned, so startup can skip the network entirely. */
     val hasRouteDecision: Boolean get() = whiteLocked || hasCachedOffer
+
+    // --- holdback cohort -----------------------------------------------------
+
+    /**
+     * True for the ~1-in-5 installs that are deliberately NOT sent through AppsFlyer.
+     * The coin is flipped once on the first read and persisted, so the same install always
+     * gets the same answer across launches (a per-launch roll would split one user between
+     * cohorts). These installs are still routed and still reach the offer - they are just
+     * unattributed on purpose, and the offer URL tags them with sub15=holdback so the
+     * tracker can tell them apart from "AppsFlyer never answered".
+     */
+    val isHoldback: Boolean
+        get() {
+            if (!prefs.contains(KEY_HOLDBACK)) {
+                val decided = Random.nextInt(HOLDBACK_EVERY_N) == 0
+                prefs.edit().putBoolean(KEY_HOLDBACK, decided).apply()
+            }
+            return prefs.getBoolean(KEY_HOLDBACK, false)
+        }
 
     // --- internals -----------------------------------------------------------
 

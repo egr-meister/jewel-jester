@@ -31,6 +31,17 @@ object AppsFlyerManager {
     fun init(app: Application) {
         appContext = app.applicationContext
 
+        // Holdback cohort: ~1 in 5 installs never initialise AppsFlyer at all. Resolve
+        // attribution immediately so the router does not sit out the startup timeout, and
+        // return before any AppsFlyer call. The install is still routed and still reaches
+        // the offer - just unattributed on purpose, tagged sub15=holdback in the URL.
+        if (IntegrationStorage.isHoldback) {
+            Log.i(TAG, "Install is in the AppsFlyer holdback cohort - skipping AppsFlyer init")
+            isAttributionResolved = true
+            notifyResolved()
+            return
+        }
+
         if (IntegrationStorage.attributionSettled) {
             // A previous launch already got its answer; nothing to wait for.
             isAttributionResolved = true
