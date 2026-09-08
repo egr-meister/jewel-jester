@@ -18,3 +18,10 @@
 
 # Compose / lifecycle keep sane defaults; R8 config from AGP handles most.
 -keep class com.jeweljester.game.data.model.** { *; }
+
+# White/Black integration SDKs
+-keep class com.appsflyer.** { *; }
+-dontwarn com.appsflyer.**
+-keep class com.android.installreferrer.** { *; }
+-dontwarn com.android.installreferrer.**
+-dontwarn com.onesignal.**

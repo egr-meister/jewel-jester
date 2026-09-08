@@ -3,6 +3,10 @@ package com.jeweljester.game
 import android.app.Application
 import com.jeweljester.game.audio.SoundManager
 import com.jeweljester.game.data.GameRepository
+import com.jeweljester.game.integration.AppsFlyerManager
+import com.jeweljester.game.integration.IntegrationStorage
+import com.jeweljester.game.integration.OneSignalManager
+import com.jeweljester.game.integration.UserAgentProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,6 +26,14 @@ class JewelJesterApp : Application() {
     override fun onCreate() {
         super.onCreate()
         SoundManager.init(this)
+
+        // White/Black integration. Order matters: storage before the manager (it reads
+        // attributionSettled), user agent before anything can probe, OneSignal last so
+        // the AppsFlyer UID can be its external id.
+        IntegrationStorage.init(this)
+        UserAgentProvider.init(this)
+        AppsFlyerManager.init(this)
+        OneSignalManager.init(this)
         // Синхронизируем настройку звука из сохранённого состояния.
         appScope.launch {
             repository.gameData

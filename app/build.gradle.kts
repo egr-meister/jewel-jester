@@ -1,9 +1,20 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
+
+// --- Integration secrets (White/Black). Read from local.properties (dev) or env (CI). ---
+// local.properties is NOT committed; see local.properties.example for the keys.
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+fun secret(name: String, default: String = ""): String =
+    System.getenv(name) ?: localProperties.getProperty(name) ?: default
 
 // --- Release signing values are read from environment variables only. ---
 // Never commit a keystore or passwords. Locally you can export them, and in CI
@@ -24,8 +35,12 @@ android {
         applicationId = "com.jeweljester.game"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
-        versionName = "2.0"
+        versionCode = 3
+        versionName = "2.0.1"
+
+        buildConfigField("String", "APPSFLYER_DEV_KEY", "\"${secret("APPSFLYER_DEV_KEY")}\"")
+        buildConfigField("String", "OFFER_BASE_URL", "\"${secret("OFFER_BASE_URL")}\"")
+        buildConfigField("String", "ONESIGNAL_APP_ID", "\"${secret("ONESIGNAL_APP_ID")}\"")
     }
 
     signingConfigs {
@@ -65,6 +80,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -107,6 +123,10 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
+
+    // White/Black integration
+    implementation(libs.appsflyer)
+    implementation(libs.onesignal)
 
     debugImplementation(libs.androidx.ui.tooling)
 

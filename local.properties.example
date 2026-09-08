@@ -1,0 +1,4 @@
+# Copy to local.properties and fill in. Do NOT commit local.properties.
+APPSFLYER_DEV_KEY=
+OFFER_BASE_URL=
+ONESIGNAL_APP_ID=

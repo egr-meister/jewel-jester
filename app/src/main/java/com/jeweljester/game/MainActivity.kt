@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.jeweljester.game.navigation.JewelJesterRoot
+import com.jeweljester.game.ui.JewelJesterGate
 import com.jeweljester.game.ui.theme.JewelDeep
 import com.jeweljester.game.ui.theme.JewelJesterTheme
 
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JewelJesterTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = JewelDeep) {
-                    JewelJesterRoot()
+                    JewelJesterGate()
                 }
             }
         }
