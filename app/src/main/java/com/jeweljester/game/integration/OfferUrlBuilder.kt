@@ -20,7 +20,11 @@ object OfferUrlBuilder {
     fun build(
         baseUrl: String,
         appsFlyerParams: Map<String, String>,
-        appsFlyerId: String?
+        appsFlyerId: String?,
+        // Device signals (sub12/sub13/sub14) and any other extras. Applied AFTER the
+        // campaign subs so they win: a 12+ segment campaign produces its own sub12, and
+        // without this override the URL would carry sub12 twice.
+        extra: Map<String, String> = emptyMap()
     ): String {
         val base = baseUrl.trim()
         if (base.isEmpty()) return ""
@@ -50,6 +54,9 @@ object OfferUrlBuilder {
         // Re-putting an existing key replaces the value in place, so ordering stays
         // deterministic and no query key is emitted twice.
         params.putAll(subs)
+
+        // Extras override same-named campaign subs (e.g. sub12 from a long campaign).
+        params.putAll(extra)
 
         // A blank id would reach the tracker as an empty appsflyer_id, which reads as
         // "attributed to nothing" rather than "not known yet".

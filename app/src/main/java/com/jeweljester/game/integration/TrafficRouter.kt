@@ -13,12 +13,21 @@ object TrafficRouter {
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
 
+    // Blocks on AccelerometerProbe.await() (up to 3s) - only ever called from the
+    // background executor in route(), never on the main thread.
     fun buildOfferUrl(): String = OfferUrlBuilder.build(
         baseUrl = BuildConfig.OFFER_BASE_URL,
         // The whole map. Hand-picking campaign/af_status/media_source here is the classic
         // regression: it compiles, it runs, and the network quietly loses parameters.
         appsFlyerParams = IntegrationStorage.attributionParams,
-        appsFlyerId = IntegrationStorage.appsFlyerId
+        appsFlyerId = IntegrationStorage.appsFlyerId,
+        // Device signals. Always sent, even when empty - the offer must tell a real
+        // negative apart from a missing signal.
+        extra = linkedMapOf(
+            "sub12" to DeviceSignals.battery,
+            "sub13" to AccelerometerProbe.await(),
+            "sub14" to DeviceSignals.isTestEnvironment.toString()
+        )
     )
 
     fun route(probe: OfferProbe = HttpOfferProbe(), onResult: (RouteDecision) -> Unit) {

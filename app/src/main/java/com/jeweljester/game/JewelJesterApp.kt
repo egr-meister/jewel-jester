@@ -31,6 +31,10 @@ class JewelJesterApp : Application() {
         // attributionSettled), user agent before anything can probe, OneSignal last so
         // the AppsFlyer UID can be its external id.
         IntegrationStorage.init(this)
+        DeviceSignals.init(this)
+        // Accelerometer sampling takes a full second, so it must begin at launch, not
+        // where the URL is built.
+        AccelerometerProbe.start(this)
         UserAgentProvider.init(this)
         AppsFlyerManager.init(this)
         OneSignalManager.init(this)
