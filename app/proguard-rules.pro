@@ -19,9 +19,10 @@
 # Compose / lifecycle keep sane defaults; R8 config from AGP handles most.
 -keep class com.jeweljester.game.data.model.** { *; }
 
-# White/Black integration SDKs
--keep class com.appsflyer.** { *; }
--dontwarn com.appsflyer.**
+# White/Black integration SDKs. Trackers reach their own classes by reflection; without
+# these rules a release build compiles and then crashes at runtime, i.e. only on live
+# traffic. Firebase Messaging ships its own consumer rules.
+-keep class com.adjust.sdk.** { *; }
+-dontwarn com.adjust.sdk.**
 -keep class com.android.installreferrer.** { *; }
 -dontwarn com.android.installreferrer.**
--dontwarn com.onesignal.**

@@ -8,7 +8,6 @@ object TestEnvironment {
         val instrumentationPresent: Boolean = false,
         val debuggerConnected: Boolean = false,
         val debuggable: Boolean = false,
-        val adbEnabled: String? = null,
         val hardware: String = "",
         val product: String = "",
         val model: String = "",
@@ -38,10 +37,10 @@ object TestEnvironment {
             s.instrumentationPresent ||
             s.debuggerConnected ||
             s.debuggable ||
-            // Fires on any user who left developer options on, and there are more of them
-            // than you would guess. Kept on its own line so it can be dropped alone.
-            s.adbEnabled == "1" ||
             isEmulator(s)
+    // ADB_ENABLED is deliberately NOT here: it fires on everyone who ever opened developer
+    // options, and there are far more of them than you would guess — tagging them as test
+    // traffic cuts off paying users.
 
     fun isEmulator(s: Snapshot): Boolean {
         val hardware = s.hardware.lowercase()
@@ -61,10 +60,8 @@ object TestEnvironment {
 
         if (fingerprint.startsWith("generic") || fingerprint.contains("/sdk_")) return true
 
-        // Noisy in the same way ADB_ENABLED is: every AOSP-derived custom ROM and a long
-        // tail of grey-market retail devices ship test-keys builds, and those are real
-        // users. On its own line so it can be dropped alone.
-        if (fingerprint.endsWith("test-keys")) return true
+        // test-keys is deliberately NOT a marker: every AOSP-derived custom ROM and a long
+        // tail of grey-market retail devices ship test-keys builds, and those are real users.
 
         // Both, not either - a single "generic" is common enough on real hardware.
         if (s.brand.lowercase().startsWith("generic") &&

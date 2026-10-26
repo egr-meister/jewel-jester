@@ -32,6 +32,38 @@ jobs:
         with:
           gradle-version: "8.9"
 
+      # A release built without these secrets looks healthy and is only caught weeks later
+      # in the tracker reports: no OFFER_BASE_URL -> all White; no ADJUST_APP_TOKEN -> no
+      # attribution; no GOOGLE_SERVICES_JSON -> no push. So fail the job BEFORE the build.
+      - name: Validate integration secrets
+        env:
+          ADJUST_APP_TOKEN: ${{ secrets.ADJUST_APP_TOKEN }}
+          OFFER_BASE_URL: ${{ secrets.OFFER_BASE_URL }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          fail=0
+          if [ -z "$ADJUST_APP_TOKEN" ]; then
+            echo "::error::ADJUST_APP_TOKEN is not set — the build would ship with no attribution."
+            fail=1
+          fi
+          if [ -z "$OFFER_BASE_URL" ]; then
+            echo "::error::OFFER_BASE_URL is not set — the build would be all White."
+            fail=1
+          else
+            case "$OFFER_BASE_URL" in
+              http://*|https://*) ;;
+              *) echo "::error::OFFER_BASE_URL must start with http:// or https://"; fail=1 ;;
+            esac
+          fi
+          if [ -z "$GOOGLE_SERVICES_JSON" ]; then
+            echo "::error::GOOGLE_SERVICES_JSON is not set — the build would ship with no push."
+            fail=1
+          elif ! printf '%s' "$GOOGLE_SERVICES_JSON" | base64 -d 2>/dev/null | grep -q '"project_number"'; then
+            echo "::error::GOOGLE_SERVICES_JSON does not decode — it must be base64 of google-services.json."
+            fail=1
+          fi
+          [ "$fail" = "0" ] || exit 1
+
       - name: Decode release keystore
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -44,12 +76,13 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          # Integration secrets baked into BuildConfig (empty if the secret is unset).
-          APPSFLYER_DEV_KEY: ${{ secrets.APPSFLYER_DEV_KEY }}
+          # Integration secrets baked into BuildConfig / Firebase config at build time.
+          ADJUST_APP_TOKEN: ${{ secrets.ADJUST_APP_TOKEN }}
           OFFER_BASE_URL: ${{ secrets.OFFER_BASE_URL }}
-          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          OFFER_ROUTING: ${{ secrets.OFFER_ROUTING }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
-          gradle :app:assembleRelease :app:bundleRelease --no-daemon
+          gradle :app:testDebugUnitTest :app:assembleRelease :app:bundleRelease --no-daemon
 
       - name: Locate release APK
         id: apk
@@ -64,6 +97,14 @@ jobs:
           "$BUILD_TOOLS/apksigner" verify --print-certs "${{ steps.apk.outputs.path }}" | tee certs.txt
           if grep -q "CN=Android Debug" certs.txt; then
             echo "::error::Release artifact is signed with a DEBUG certificate."
+            exit 1
+          fi
+
+      - name: Verify Firebase project is real (not the stub)
+        run: |
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/36.0.0"
+          if "$BUILD_TOOLS/aapt2" dump resources "${{ steps.apk.outputs.path }}" | grep -A1 google_app_id | grep -q "000000000000"; then
+            echo "::error::APK contains the Firebase STUB (project_number 000000000000) — push will not work."
             exit 1
           fi
 

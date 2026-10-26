@@ -10,9 +10,14 @@ datastore = "1.1.1"
 coroutines = "1.9.0"
 serialization = "1.7.3"
 junit = "4.13.2"
-appsflyer = "6.14.2"
-onesignal = "5.1.6"
 webkit = "1.12.1"
+
+# White/Black integration
+adjust = "5.8.0"
+installreferrer = "2.2"
+playServicesAdsIdentifier = "18.0.1"
+firebaseBom = "34.19.0"
+googleServices = "4.4.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,13 +38,20 @@ androidx-datastore-preferences = { group = "androidx.datastore", name = "datasto
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-appsflyer = { group = "com.appsflyer", name = "af-android-sdk", version.ref = "appsflyer" }
-onesignal = { group = "com.onesignal", name = "OneSignal", version.ref = "onesignal" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# White/Black integration: Adjust attribution + Firebase Cloud Messaging
+adjust = { group = "com.adjust.sdk", name = "adjust-android", version.ref = "adjust" }
+installreferrer = { group = "com.android.installreferrer", name = "installreferrer", version.ref = "installreferrer" }
+play-services-ads-identifier = { group = "com.google.android.gms", name = "play-services-ads-identifier", version.ref = "playServicesAdsIdentifier" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+# Version comes from the BOM, so it is deliberately absent here.
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
