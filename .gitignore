@@ -20,3 +20,4 @@ release/
 # Firebase config is a secret, materialised at build time from GOOGLE_SERVICES_JSON
 app/src/debug/google-services.json
 app/src/release/google-services.json
+/app/build
