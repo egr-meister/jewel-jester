@@ -20,10 +20,15 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # Skip the action's default install of the obsolete `tools` package, which no
+          # longer exists in the SDK repo and makes the step fail. We install what we need
+          # explicitly below.
+          packages: ''
 
       - name: Install SDK Platform 36 and Build Tools 36.0.0
         run: |
-          yes | sdkmanager "platforms;android-36" "build-tools;36.0.0" >/dev/null
+          yes | sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0" >/dev/null
 
       # Provisions Gradle 8.9 and puts `gradle` on PATH, so the repo does not
       # need a committed Gradle wrapper for CI to build.
