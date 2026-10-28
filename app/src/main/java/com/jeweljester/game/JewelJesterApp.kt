@@ -6,6 +6,7 @@ import com.jeweljester.game.data.GameRepository
 import com.jeweljester.game.integration.AccelerometerProbe
 import com.jeweljester.game.integration.AdjustManager
 import com.jeweljester.game.integration.DeviceSignals
+import com.jeweljester.game.integration.GaidProbe
 import com.jeweljester.game.integration.IntegrationStorage
 import com.jeweljester.game.integration.PushManager
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +35,9 @@ class JewelJesterApp : Application() {
         IntegrationStorage.init(this)
         DeviceSignals.init(this)
         AccelerometerProbe.start(this)
+        // GAID read is blocking and hits Google Play Services — start it on a background
+        // thread early, so building the URL does not pay the full wait.
+        GaidProbe.start(this)
         AdjustManager.init(this)
         PushManager.init(this)
 

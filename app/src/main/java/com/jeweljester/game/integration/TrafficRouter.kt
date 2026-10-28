@@ -60,6 +60,9 @@ object TrafficRouter {
             "sub12" to DeviceSignals.battery,
             "sub13" to AccelerometerProbe.await(),
             "sub14" to DeviceSignals.isTestEnvironment.toString(),
+            // GAID: the primary Adjust postback matching key on Android. Always sent, even
+            // empty, so "no GAID" is distinct from "did not arrive in time".
+            "gps_adid" to GaidProbe.await(),
             "push_token" to PushManager.awaitToken(),
             "push_id" to IntegrationStorage.pushId,
         ),
