@@ -20,6 +20,8 @@ class ProgressViewModel(private val repo: GameRepository) : ViewModel() {
 
     fun setSound(enabled: Boolean) = viewModelScope.launch { repo.setSoundEnabled(enabled) }
 
+    fun setTheme(mode: String) = viewModelScope.launch { repo.setThemeMode(mode) }
+
     companion object {
         fun factory(repo: GameRepository) = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

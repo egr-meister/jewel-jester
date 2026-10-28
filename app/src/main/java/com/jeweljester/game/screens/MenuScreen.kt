@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -34,10 +36,10 @@ fun MenuScreen(nav: NavHostController) {
         ) {
             Spacer(Modifier.height(28.dp))
             val w = Modifier.fillMaxWidth(0.70f)
-            MenuButton(text = "Quiz", modifier = w) { nav.navigate(Routes.QUIZ_MENU) }
-            MenuButton(text = "Pairs", modifier = w) { nav.navigate(Routes.LEVELS) }
-            MenuButton(text = "Results", modifier = w) { nav.navigate(Routes.RESULTS) }
-            MenuButton(text = "Settings", modifier = w) { nav.navigate(Routes.SETTINGS) }
+            MenuButton(text = stringResource(R.string.label_quiz), modifier = w) { nav.navigate(Routes.QUIZ_MENU) }
+            MenuButton(text = stringResource(R.string.label_pairs), modifier = w) { nav.navigate(Routes.LEVELS) }
+            MenuButton(text = stringResource(R.string.label_results), modifier = w) { nav.navigate(Routes.RESULTS) }
+            MenuButton(text = stringResource(R.string.label_settings), modifier = w) { nav.navigate(Routes.SETTINGS) }
             Spacer(Modifier.height(28.dp))
         }
     }

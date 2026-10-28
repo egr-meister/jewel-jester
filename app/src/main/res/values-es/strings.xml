@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_start">Jugar</string>
+    <string name="action_continue">Continuar</string>
+    <string name="action_restart">Reiniciar</string>
+    <string name="action_menu">Menú</string>
+    <string name="action_next_level">Siguiente nivel</string>
+    <string name="action_reset">Restablecer</string>
+    <string name="action_cancel">Cancelar</string>
+
+    <string name="label_quiz">Cuestionario</string>
+    <string name="label_pairs">Parejas</string>
+    <string name="label_results">Resultados</string>
+    <string name="label_settings">Ajustes</string>
+    <string name="label_levels">Niveles</string>
+    <string name="label_matching_pairs">Encontrar parejas</string>
+    <string name="label_game_rules">Reglas del juego</string>
+
+    <string name="title_pause">Pausa</string>
+    <string name="title_results">Resultados</string>
+    <string name="state_well_done">¡Bien hecho!</string>
+    <string name="state_out_of_time">Tiempo agotado</string>
+
+    <string name="rules_body">Encuentra joyas idénticas para completar el juego. Voltea dos cartas: si coinciden, permanecen abiertas. Abre todas las parejas antes de que se acabe el tiempo.</string>
+
+    <string name="settings_sound">Sonido</string>
+    <string name="settings_privacy_policy">Política de privacidad</string>
+    <string name="settings_rate_app">Valorar la aplicación</string>
+    <string name="settings_reset_results">Restablecer resultados</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_language">Idioma</string>
+    <string name="theme_system">Sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="language_system">Sistema</string>
+
+    <string name="dialog_reset_title">¿Restablecer todos los resultados?</string>
+    <string name="dialog_reset_message">Esto eliminará permanentemente todas las puntuaciones del cuestionario y el progreso de los niveles guardados en este dispositivo.</string>
+    <string name="toast_results_reset">Resultados restablecidos</string>
+
+    <string name="fmt_score">Puntuación: %1$d/%2$d</string>
+    <string name="fmt_pairs">Parejas: %1$d/%2$d</string>
+    <string name="fmt_level">Nivel %1$d</string>
+</resources>

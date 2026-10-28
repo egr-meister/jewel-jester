@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_start">Jouer</string>
+    <string name="action_continue">Continuer</string>
+    <string name="action_restart">Recommencer</string>
+    <string name="action_menu">Menu</string>
+    <string name="action_next_level">Niveau suivant</string>
+    <string name="action_reset">Réinitialiser</string>
+    <string name="action_cancel">Annuler</string>
+
+    <string name="label_quiz">Quiz</string>
+    <string name="label_pairs">Paires</string>
+    <string name="label_results">Résultats</string>
+    <string name="label_settings">Paramètres</string>
+    <string name="label_levels">Niveaux</string>
+    <string name="label_matching_pairs">Paires identiques</string>
+    <string name="label_game_rules">Règles du jeu</string>
+
+    <string name="title_pause">Pause</string>
+    <string name="title_results">Résultats</string>
+    <string name="state_well_done">Bravo</string>
+    <string name="state_out_of_time">Temps écoulé</string>
+
+    <string name="rules_body">Associez les joyaux identiques pour terminer le jeu. Retournez deux cartes : si elles correspondent, elles restent ouvertes. Ouvrez toutes les paires avant la fin du temps.</string>
+
+    <string name="settings_sound">Son</string>
+    <string name="settings_privacy_policy">Politique de confidentialité</string>
+    <string name="settings_rate_app">Noter l\'application</string>
+    <string name="settings_reset_results">Réinitialiser les résultats</string>
+    <string name="settings_theme">Thème</string>
+    <string name="settings_language">Langue</string>
+    <string name="theme_system">Système</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="language_system">Système</string>
+
+    <string name="dialog_reset_title">Réinitialiser tous les résultats ?</string>
+    <string name="dialog_reset_message">Cela supprimera définitivement tous les scores de quiz et la progression des niveaux enregistrés sur cet appareil.</string>
+    <string name="toast_results_reset">Résultats réinitialisés</string>
+
+    <string name="fmt_score">Score : %1$d/%2$d</string>
+    <string name="fmt_pairs">Paires : %1$d/%2$d</string>
+    <string name="fmt_level">Niveau %1$d</string>
+</resources>

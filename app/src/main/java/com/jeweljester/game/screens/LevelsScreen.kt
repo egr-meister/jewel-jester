@@ -24,6 +24,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +54,7 @@ fun LevelsScreen(nav: NavHostController) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            JewelTopBar(title = "Levels", onBack = { nav.popBackStack() })
+            JewelTopBar(title = stringResource(R.string.label_levels), onBack = { nav.popBackStack() })
 
             // Цифры уровней — сразу под заголовком (выше по экрану).
             Spacer(Modifier.height(12.dp))
@@ -91,7 +93,7 @@ fun LevelsScreen(nav: NavHostController) {
             )
 
             Box(modifier = Modifier.padding(horizontal = 40.dp, vertical = 12.dp)) {
-                JewelButton("Game Rules") { nav.navigate(Routes.RULES) }
+                JewelButton(stringResource(R.string.label_game_rules)) { nav.navigate(Routes.RULES) }
             }
         }
     }

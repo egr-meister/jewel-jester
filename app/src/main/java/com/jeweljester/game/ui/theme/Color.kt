@@ -13,3 +13,8 @@ val White = Color(0xFFFFFFFF)
 
 val CorrectGreen = Color(0xFF2F8F5B)
 val WrongRed = Color(0xFFB73A3A)
+
+// Light theme tokens (own palette, not Material defaults).
+val JewelDeepLight = Color(0xFFF6F1FC)
+val JewelPurpleLight = Color(0xFFEADCF8)
+val TextOnLight = Color(0xFF2A0A4A)

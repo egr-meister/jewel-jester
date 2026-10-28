@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,7 +49,7 @@ fun ResultsScreen(nav: NavHostController) {
 
     JewelBackground {
         Column(modifier = Modifier.fillMaxSize()) {
-            JewelTopBar(title = "Results", onBack = { nav.popBackStack() })
+            JewelTopBar(title = stringResource(R.string.title_results), onBack = { nav.popBackStack() })
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -62,7 +64,7 @@ fun ResultsScreen(nav: NavHostController) {
                     )
                 }
                 ResultRow(
-                    label = "Matching Pairs",
+                    label = stringResource(R.string.label_matching_pairs),
                     value = "${GameLogic.pairsCompletedCount(data.pairsBest)}/${PairsData.TOTAL_LEVELS}"
                 )
             }

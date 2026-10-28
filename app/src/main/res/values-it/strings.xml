@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_start">Gioca</string>
+    <string name="action_continue">Continua</string>
+    <string name="action_restart">Ricomincia</string>
+    <string name="action_menu">Menu</string>
+    <string name="action_next_level">Livello successivo</string>
+    <string name="action_reset">Reimposta</string>
+    <string name="action_cancel">Annulla</string>
+
+    <string name="label_quiz">Quiz</string>
+    <string name="label_pairs">Coppie</string>
+    <string name="label_results">Risultati</string>
+    <string name="label_settings">Impostazioni</string>
+    <string name="label_levels">Livelli</string>
+    <string name="label_matching_pairs">Trova le coppie</string>
+    <string name="label_game_rules">Regole del gioco</string>
+
+    <string name="title_pause">Pausa</string>
+    <string name="title_results">Risultati</string>
+    <string name="state_well_done">Ben fatto</string>
+    <string name="state_out_of_time">Tempo scaduto</string>
+
+    <string name="rules_body">Abbina gemme identiche per completare il gioco. Gira due carte: se corrispondono, restano aperte. Apri tutte le coppie prima che scada il tempo.</string>
+
+    <string name="settings_sound">Audio</string>
+    <string name="settings_privacy_policy">Informativa sulla privacy</string>
+    <string name="settings_rate_app">Valuta l\'app</string>
+    <string name="settings_reset_results">Reimposta risultati</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_language">Lingua</string>
+    <string name="theme_system">Sistema</string>
+    <string name="theme_light">Chiaro</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="language_system">Sistema</string>
+
+    <string name="dialog_reset_title">Reimpostare tutti i risultati?</string>
+    <string name="dialog_reset_message">Questo rimuoverà definitivamente tutti i punteggi dei quiz e i progressi dei livelli salvati su questo dispositivo.</string>
+    <string name="toast_results_reset">Risultati reimpostati</string>
+
+    <string name="fmt_score">Punteggio: %1$d/%2$d</string>
+    <string name="fmt_pairs">Coppie: %1$d/%2$d</string>
+    <string name="fmt_level">Livello %1$d</string>
+</resources>

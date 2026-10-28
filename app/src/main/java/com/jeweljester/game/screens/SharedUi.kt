@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,11 +37,11 @@ fun PausePanel(
 ) {
     ModalScrim {
         JewelPanel {
-            PanelTitle("Pause")
+            PanelTitle(stringResource(R.string.title_pause))
             Spacer(Modifier.height(4.dp))
-            JewelButton("Continue") { onContinue() }
-            JewelButton("Restart") { onRestart() }
-            JewelButton("Menu") { onMenu() }
+            JewelButton(stringResource(R.string.action_continue)) { onContinue() }
+            JewelButton(stringResource(R.string.action_restart)) { onRestart() }
+            JewelButton(stringResource(R.string.action_menu)) { onMenu() }
         }
     }
 }
@@ -48,14 +50,15 @@ fun PausePanel(
 fun ResultPanel(
     title: String,
     subtitle: String? = null,
-    continueLabel: String = "Continue",
+    continueLabel: String? = null,
     onContinue: () -> Unit,
     onRestart: () -> Unit,
     onMenu: () -> Unit
 ) {
+    val continueText = continueLabel ?: stringResource(R.string.action_continue)
     ModalScrim {
         JewelPanel {
-            PanelTitle("Results")
+            PanelTitle(stringResource(R.string.title_results))
             Text(
                 text = title.uppercase(),
                 color = White,
@@ -75,9 +78,9 @@ fun ResultPanel(
                 )
             }
             Spacer(Modifier.height(4.dp))
-            JewelButton(continueLabel) { onContinue() }
-            JewelButton("Restart") { onRestart() }
-            JewelButton("Menu") { onMenu() }
+            JewelButton(continueText) { onContinue() }
+            JewelButton(stringResource(R.string.action_restart)) { onRestart() }
+            JewelButton(stringResource(R.string.action_menu)) { onMenu() }
         }
     }
 }

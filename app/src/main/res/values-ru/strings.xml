@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_start">Играть</string>
+    <string name="action_continue">Продолжить</string>
+    <string name="action_restart">Заново</string>
+    <string name="action_menu">Меню</string>
+    <string name="action_next_level">Следующий уровень</string>
+    <string name="action_reset">Сбросить</string>
+    <string name="action_cancel">Отмена</string>
+
+    <string name="label_quiz">Викторина</string>
+    <string name="label_pairs">Пары</string>
+    <string name="label_results">Результаты</string>
+    <string name="label_settings">Настройки</string>
+    <string name="label_levels">Уровни</string>
+    <string name="label_matching_pairs">Поиск пар</string>
+    <string name="label_game_rules">Правила игры</string>
+
+    <string name="title_pause">Пауза</string>
+    <string name="title_results">Результаты</string>
+    <string name="state_well_done">Отлично</string>
+    <string name="state_out_of_time">Время вышло</string>
+
+    <string name="rules_body">Находите одинаковые самоцветы, чтобы пройти игру. Переворачивайте две карты: если они совпадают, остаются открытыми. Откройте все пары, пока не вышло время.</string>
+
+    <string name="settings_sound">Звук</string>
+    <string name="settings_privacy_policy">Политика конфиденциальности</string>
+    <string name="settings_rate_app">Оценить приложение</string>
+    <string name="settings_reset_results">Сбросить результаты</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_language">Язык</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="language_system">Системный</string>
+
+    <string name="dialog_reset_title">Сбросить все результаты?</string>
+    <string name="dialog_reset_message">Это навсегда удалит все сохранённые результаты викторины и прогресс уровней на этом устройстве.</string>
+    <string name="toast_results_reset">Результаты сброшены</string>
+
+    <string name="fmt_score">Счёт: %1$d/%2$d</string>
+    <string name="fmt_pairs">Пары: %1$d/%2$d</string>
+    <string name="fmt_level">Уровень %1$d</string>
+</resources>

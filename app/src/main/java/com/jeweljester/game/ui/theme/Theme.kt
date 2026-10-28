@@ -1,10 +1,22 @@
 package com.jeweljester.game.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val JewelColorScheme = darkColorScheme(
+/** Theme choice stored in settings. SYSTEM follows the device. */
+enum class ThemeMode {
+    SYSTEM, LIGHT, DARK;
+
+    companion object {
+        fun from(value: String?): ThemeMode =
+            runCatching { valueOf(value ?: SYSTEM.name) }.getOrDefault(SYSTEM)
+    }
+}
+
+private val JewelDarkColors = darkColorScheme(
     primary = Gold,
     onPrimary = TextOnGold,
     secondary = JewelLight,
@@ -14,11 +26,29 @@ private val JewelColorScheme = darkColorScheme(
     onSurface = White,
 )
 
+private val JewelLightColors = lightColorScheme(
+    primary = GoldDark,
+    onPrimary = White,
+    secondary = JewelLight,
+    background = JewelDeepLight,
+    onBackground = TextOnLight,
+    surface = JewelPurpleLight,
+    onSurface = TextOnLight,
+)
+
 @Composable
-fun JewelJesterTheme(content: @Composable () -> Unit) {
+fun JewelJesterTheme(
+    themeMode: ThemeMode = ThemeMode.SYSTEM,
+    content: @Composable () -> Unit,
+) {
+    val dark = when (themeMode) {
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+    }
     MaterialTheme(
-        colorScheme = JewelColorScheme,
+        colorScheme = if (dark) JewelDarkColors else JewelLightColors,
         typography = JewelTypography,
-        content = content
+        content = content,
     )
 }

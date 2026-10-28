@@ -56,6 +56,10 @@ class GameRepository(context: Context) {
         data.copy(settings = data.settings.copy(soundEnabled = enabled))
     }
 
+    suspend fun setThemeMode(mode: String) = update { data ->
+        data.copy(settings = data.settings.copy(themeMode = mode))
+    }
+
     /** Полный сброс локального прогресса. */
     suspend fun resetAll() {
         store.edit { it.remove(gameKey) }
