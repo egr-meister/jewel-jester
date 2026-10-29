@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_start">Spielen</string>
+    <string name="action_continue">Weiter</string>
+    <string name="action_restart">Neustart</string>
+    <string name="action_menu">Menü</string>
+    <string name="action_next_level">Nächstes Level</string>
+    <string name="action_reset">Zurücksetzen</string>
+    <string name="action_cancel">Abbrechen</string>
+
+    <string name="label_quiz">Quiz</string>
+    <string name="label_pairs">Paare</string>
+    <string name="label_results">Ergebnisse</string>
+    <string name="label_settings">Einstellungen</string>
+    <string name="label_levels">Level</string>
+    <string name="label_matching_pairs">Paare finden</string>
+    <string name="label_game_rules">Spielregeln</string>
+
+    <string name="title_pause">Pause</string>
+    <string name="title_results">Ergebnisse</string>
+    <string name="state_well_done">Gut gemacht</string>
+    <string name="state_out_of_time">Zeit abgelaufen</string>
+
+    <string name="rules_body">Finde identische Juwelen, um das Spiel abzuschließen. Drehe zwei Karten um: Stimmen sie überein, bleiben sie offen. Öffne alle Paare, bevor die Zeit abläuft.</string>
+
+    <string name="settings_sound">Ton</string>
+    <string name="settings_privacy_policy">Datenschutzrichtlinie</string>
+    <string name="settings_rate_app">App bewerten</string>
+    <string name="settings_reset_results">Ergebnisse zurücksetzen</string>
+    <string name="settings_theme">Design</string>
+    <string name="settings_language">Sprache</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="language_system">System</string>
+
+    <string name="dialog_reset_title">Alle Ergebnisse zurücksetzen?</string>
+    <string name="dialog_reset_message">Dadurch werden alle gespeicherten Quiz-Punktzahlen und Level-Fortschritte auf diesem Gerät dauerhaft entfernt.</string>
+    <string name="toast_results_reset">Ergebnisse zurückgesetzt</string>
+
+    <string name="fmt_score">Punkte: %1$d/%2$d</string>
+    <string name="fmt_pairs">Paare: %1$d/%2$d</string>
+    <string name="fmt_level">Level %1$d</string>
+</resources>

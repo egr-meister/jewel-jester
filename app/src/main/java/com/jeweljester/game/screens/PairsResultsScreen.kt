@@ -1,7 +1,9 @@
 package com.jeweljester.game.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.jeweljester.game.R
 import com.jeweljester.game.data.PairsData
 import com.jeweljester.game.navigation.Routes
 import com.jeweljester.game.ui.components.JewelBackground
@@ -18,9 +20,9 @@ fun PairsResultsScreen(
 
     JewelBackground {
         ResultPanel(
-            title = if (won) "Well Done" else "Out of Time",
-            subtitle = "Pairs: $matched/${config.pairs}",
-            continueLabel = if (won && hasNext) "Next Level" else "Continue",
+            title = if (won) stringResource(R.string.state_well_done) else stringResource(R.string.state_out_of_time),
+            subtitle = stringResource(R.string.fmt_pairs, matched, config.pairs),
+            continueLabel = if (won && hasNext) stringResource(R.string.action_next_level) else stringResource(R.string.action_continue),
             onContinue = {
                 if (won && hasNext) {
                     nav.navigate(Routes.pairs(level + 1)) { popUpTo(Routes.LEVELS) }

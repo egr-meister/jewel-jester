@@ -19,5 +19,8 @@ data class GameData(
 
 @Serializable
 data class Settings(
-    val soundEnabled: Boolean = true
+    val soundEnabled: Boolean = true,
+    // SYSTEM | LIGHT | DARK. Language is NOT stored here — AppCompatDelegate is the source
+    // of truth for the locale (see LocaleManager), so a second copy cannot drift.
+    val themeMode: String = "SYSTEM"
 )

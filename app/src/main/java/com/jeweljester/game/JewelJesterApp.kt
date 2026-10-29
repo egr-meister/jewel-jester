@@ -4,11 +4,11 @@ import android.app.Application
 import com.jeweljester.game.audio.SoundManager
 import com.jeweljester.game.data.GameRepository
 import com.jeweljester.game.integration.AccelerometerProbe
-import com.jeweljester.game.integration.AppsFlyerManager
+import com.jeweljester.game.integration.AdjustManager
 import com.jeweljester.game.integration.DeviceSignals
+import com.jeweljester.game.integration.GaidProbe
 import com.jeweljester.game.integration.IntegrationStorage
-import com.jeweljester.game.integration.OneSignalManager
-import com.jeweljester.game.integration.UserAgentProvider
+import com.jeweljester.game.integration.PushManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -29,17 +29,18 @@ class JewelJesterApp : Application() {
         super.onCreate()
         SoundManager.init(this)
 
-        // White/Black integration. Order matters: storage before the manager (it reads
-        // attributionSettled), user agent before anything can probe, OneSignal last so
-        // the AppsFlyer UID can be its external id.
+        // White/Black integration. Order matters: storage first (everyone reads from it);
+        // the accelerometer window is a whole second, so it must begin at launch, not where
+        // the URL is built; the push token must be requested before the single click.
         IntegrationStorage.init(this)
         DeviceSignals.init(this)
-        // Accelerometer sampling takes a full second, so it must begin at launch, not
-        // where the URL is built.
         AccelerometerProbe.start(this)
-        UserAgentProvider.init(this)
-        AppsFlyerManager.init(this)
-        OneSignalManager.init(this)
+        // GAID read is blocking and hits Google Play Services — start it on a background
+        // thread early, so building the URL does not pay the full wait.
+        GaidProbe.start(this)
+        AdjustManager.init(this)
+        PushManager.init(this)
+
         // Синхронизируем настройку звука из сохранённого состояния.
         appScope.launch {
             repository.gameData

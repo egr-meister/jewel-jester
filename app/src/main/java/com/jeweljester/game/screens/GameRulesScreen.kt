@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -28,11 +30,9 @@ fun GameRulesScreen(nav: NavHostController) {
             contentAlignment = Alignment.Center
         ) {
             JewelPanel {
-                PanelTitle("Game Rules")
+                PanelTitle(stringResource(R.string.label_game_rules))
                 Text(
-                    text = "Match identical jewels to complete the game. " +
-                        "Flip two cards: if they match, they stay open. " +
-                        "Open all pairs before the time runs out to win.",
+                    text = stringResource(R.string.rules_body),
                     color = White,
                     fontWeight = FontWeight.Medium,
                     fontSize = 16.sp,
@@ -40,7 +40,7 @@ fun GameRulesScreen(nav: NavHostController) {
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(4.dp))
-                JewelButton("Continue") { nav.popBackStack() }
+                JewelButton(stringResource(R.string.action_continue)) { nav.popBackStack() }
             }
         }
     }

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,7 +21,7 @@ import com.jeweljester.game.ui.components.JewelTopBar
 fun QuizMenuScreen(nav: NavHostController) {
     JewelBackground {
         Column(modifier = Modifier.fillMaxSize()) {
-            JewelTopBar(title = "Quiz", onBack = { nav.popBackStack() })
+            JewelTopBar(title = stringResource(R.string.label_quiz), onBack = { nav.popBackStack() })
             Column(
                 modifier = Modifier
                     .fillMaxSize()

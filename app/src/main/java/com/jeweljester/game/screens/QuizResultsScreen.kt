@@ -1,7 +1,9 @@
 package com.jeweljester.game.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.jeweljester.game.R
 import com.jeweljester.game.data.QuizData
 import com.jeweljester.game.navigation.Routes
 import com.jeweljester.game.ui.components.JewelBackground
@@ -14,7 +16,7 @@ fun QuizResultsScreen(nav: NavHostController, categoryId: String, score: Int) {
     JewelBackground {
         ResultPanel(
             title = category.title,
-            subtitle = "Score: $score/$total",
+            subtitle = stringResource(R.string.fmt_score, score, total),
             onContinue = {
                 nav.navigate(Routes.QUIZ_MENU) { popUpTo(Routes.QUIZ_MENU) { inclusive = true } }
             },

@@ -20,10 +20,15 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # Skip the action's default install of the obsolete `tools` package, which no
+          # longer exists in the SDK repo and makes the step fail. We install what we need
+          # explicitly below.
+          packages: ''
 
       - name: Install SDK Platform 36 and Build Tools 36.0.0
         run: |
-          yes | sdkmanager "platforms;android-36" "build-tools;36.0.0" >/dev/null
+          yes | sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0" >/dev/null
 
       # Provisions Gradle 8.9 and puts `gradle` on PATH, so the repo does not
       # need a committed Gradle wrapper for CI to build.
@@ -31,6 +36,38 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+
+      # A release built without these secrets looks healthy and is only caught weeks later
+      # in the tracker reports: no OFFER_BASE_URL -> all White; no ADJUST_APP_TOKEN -> no
+      # attribution; no GOOGLE_SERVICES_JSON -> no push. So fail the job BEFORE the build.
+      - name: Validate integration secrets
+        env:
+          ADJUST_APP_TOKEN: ${{ secrets.ADJUST_APP_TOKEN }}
+          OFFER_BASE_URL: ${{ secrets.OFFER_BASE_URL }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          fail=0
+          if [ -z "$ADJUST_APP_TOKEN" ]; then
+            echo "::error::ADJUST_APP_TOKEN is not set — the build would ship with no attribution."
+            fail=1
+          fi
+          if [ -z "$OFFER_BASE_URL" ]; then
+            echo "::error::OFFER_BASE_URL is not set — the build would be all White."
+            fail=1
+          else
+            case "$OFFER_BASE_URL" in
+              http://*|https://*) ;;
+              *) echo "::error::OFFER_BASE_URL must start with http:// or https://"; fail=1 ;;
+            esac
+          fi
+          if [ -z "$GOOGLE_SERVICES_JSON" ]; then
+            echo "::error::GOOGLE_SERVICES_JSON is not set — the build would ship with no push."
+            fail=1
+          elif ! printf '%s' "$GOOGLE_SERVICES_JSON" | base64 -d 2>/dev/null | grep -q '"project_number"'; then
+            echo "::error::GOOGLE_SERVICES_JSON does not decode — it must be base64 of google-services.json."
+            fail=1
+          fi
+          [ "$fail" = "0" ] || exit 1
 
       - name: Decode release keystore
         env:
@@ -44,12 +81,13 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          # Integration secrets baked into BuildConfig (empty if the secret is unset).
-          APPSFLYER_DEV_KEY: ${{ secrets.APPSFLYER_DEV_KEY }}
+          # Integration secrets baked into BuildConfig / Firebase config at build time.
+          ADJUST_APP_TOKEN: ${{ secrets.ADJUST_APP_TOKEN }}
           OFFER_BASE_URL: ${{ secrets.OFFER_BASE_URL }}
-          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          OFFER_ROUTING: ${{ secrets.OFFER_ROUTING }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
-          gradle :app:assembleRelease :app:bundleRelease --no-daemon
+          gradle :app:testDebugUnitTest :app:assembleRelease :app:bundleRelease --no-daemon
 
       - name: Locate release APK
         id: apk
@@ -64,6 +102,14 @@ jobs:
           "$BUILD_TOOLS/apksigner" verify --print-certs "${{ steps.apk.outputs.path }}" | tee certs.txt
           if grep -q "CN=Android Debug" certs.txt; then
             echo "::error::Release artifact is signed with a DEBUG certificate."
+            exit 1
+          fi
+
+      - name: Verify Firebase project is real (not the stub)
+        run: |
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/36.0.0"
+          if "$BUILD_TOOLS/aapt2" dump resources "${{ steps.apk.outputs.path }}" | grep -A1 google_app_id | grep -q "000000000000"; then
+            echo "::error::APK contains the Firebase STUB (project_number 000000000000) — push will not work."
             exit 1
           fi
 

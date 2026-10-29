@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.jeweljester.game.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -47,7 +49,7 @@ fun MainScreen(nav: NavHostController) {
                 modifier = Modifier.fillMaxWidth().weight(1f)
             )
             Spacer(Modifier.height(16.dp))
-            JewelButton(text = "Start") { nav.navigate(Routes.MENU) }
+            JewelButton(text = stringResource(R.string.action_start)) { nav.navigate(Routes.MENU) }
             Spacer(Modifier.height(16.dp))
         }
     }

@@ -1,32 +1,23 @@
 package com.jeweljester.game.integration
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class RoutingRulesTest {
 
     @Test
-    fun notFoundMeansWhite() {
-        val decision = RoutingRules.decide(ProbeResult(404, "https://x/"), "https://x/")
-        assertTrue(decision is RouteDecision.White)
+    fun notFoundIsWhite() {
+        assertTrue(RoutingRules.isWhite(404))
     }
 
     @Test
-    fun okMeansBlackWithFinalUrl() {
-        val decision = RoutingRules.decide(ProbeResult(200, "https://final/"), "https://req/")
-        assertEquals(RouteDecision.Black("https://final/"), decision)
-    }
-
-    @Test
-    fun blackFallsBackToRequestedWhenNoFinalUrl() {
-        val decision = RoutingRules.decide(ProbeResult(500, null), "https://req/")
-        assertEquals(RouteDecision.Black("https://req/"), decision)
-    }
-
-    @Test
-    fun redirectStatusIsBlack() {
-        val decision = RoutingRules.decide(ProbeResult(302, "https://dest/"), "https://req/")
-        assertEquals(RouteDecision.Black("https://dest/"), decision)
+    fun everythingElseIsNotWhite() {
+        // 403 (WAF), 5xx (server hiccup) and redirects are NOT the tracker's White answer.
+        assertFalse(RoutingRules.isWhite(200))
+        assertFalse(RoutingRules.isWhite(302))
+        assertFalse(RoutingRules.isWhite(403))
+        assertFalse(RoutingRules.isWhite(410))
+        assertFalse(RoutingRules.isWhite(500))
     }
 }
