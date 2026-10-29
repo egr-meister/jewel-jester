@@ -98,8 +98,8 @@ android {
         applicationId = "com.jeweljester.game"
         minSdk = 24
         targetSdk = 36
-        versionCode = 5
-        versionName = "2.0.3"
+        versionCode = 6
+        versionName = "2.0.4"
 
         // Adjust attribution + Keitaro offer routing. Values are baked into BuildConfig
         // from local.properties (dev) or GitHub Secrets (CI); empty means White-only.
